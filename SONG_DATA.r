@@ -1,5 +1,5 @@
 # Đọc dữ liệu từ file CSV
-song_data <- read.csv("~/Desktop/song_data.csv")  
+song_data <- read.csv("/Users/mac/Downloads/XSTK/song_data.csv")
 
 # Hiển thị 6 dòng đầu tiên của dữ liệu để kiểm tra sơ bộ
 head(song_data)
@@ -14,22 +14,22 @@ sum(is.na(main_data))
 colSums(is.na(main_data))
 
 # Chuyển các biến phân loại sang kiểu factor để xử lý phù hợp
-main_data$key <- as.factor(main_data$key)                    
-main_data$audio_mode <- as.factor(main_data$audio_mode)      
-main_data$time_signature <- as.factor(main_data$time_signature)  
+main_data$key <- as.factor(main_data$key)
+main_data$audio_mode <- as.factor(main_data$audio_mode)
+main_data$time_signature <- as.factor(main_data$time_signature)
 
 # Lọc ra các biến dạng số (liên tục) để thống kê mô tả
 num_data <- main_data[sapply(main_data, is.numeric)]
 
 # Tính toán thống kê mô tả cho các biến liên tục
 des_stats <- data.frame(
-  Mean = sapply(num_data, mean),                 
-  SD = sapply(num_data, sd),                     
-  Min = sapply(num_data, min),                   
-  Q1 = sapply(num_data, function(x) quantile(x, 0.25)),  
-  Median = sapply(num_data, median),             
-  Q3 = sapply(num_data, function(x) quantile(x, 0.75)),  
-  Max = sapply(num_data, max)                    
+  Mean = sapply(num_data, mean),
+  SD = sapply(num_data, sd),
+  Min = sapply(num_data, min),
+  Q1 = sapply(num_data, function(x) quantile(x, 0.25)),
+  Median = sapply(num_data, median),
+  Q3 = sapply(num_data, function(x) quantile(x, 0.75)),
+  Max = sapply(num_data, max)
 )
 print(des_stats)
 
@@ -43,7 +43,7 @@ main_data <- main_data[!(main_data$time_signature %in% c(0, 1)), ]
 
 # Tải thư viện trực quan hóa
 library(ggplot2)
-library(ggthemes)  # dùng để thêm các theme đẹp hơn cho ggplot
+library(ggthemes) # dùng để thêm các theme đẹp hơn cho ggplot
 
 # ---------------------- BIỂU ĐỒ ----------------------
 
@@ -89,23 +89,94 @@ ggplot(main_data, aes(x = song_duration_ms, y = song_popularity)) +
 
 # Các biểu đồ tương tự cho các biến: Acousticness, Danceability, Energy, Instrumentalness,
 # Liveness, Loudness, Speechiness, Tempo, Valence
+# Scatter plot for Acousticness
+ggplot(main_data, aes(x = acousticness, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Acousticness", x = "Acousticness", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
 
+# Scatter plot for Danceability
+ggplot(main_data, aes(x = danceability, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Danceability", x = "Danceability", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Energy
+ggplot(main_data, aes(x = energy, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Energy", x = "Energy", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Instrumentalness
+ggplot(main_data, aes(x = instrumentalness, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Instrumentalness", x = "Instrumentalness", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Liveness
+ggplot(main_data, aes(x = liveness, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Liveness", x = "Liveness", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Loudness
+ggplot(main_data, aes(x = loudness, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Loudness", x = "Loudness", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Speechiness
+ggplot(main_data, aes(x = speechiness, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Speechiness", x = "Speechiness", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Tempo
+ggplot(main_data, aes(x = tempo, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Tempo", x = "Tempo", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
+
+# Scatter plot for Valence
+ggplot(main_data, aes(x = audio_valence, y = song_popularity)) +
+  geom_point(alpha = 0.5, color = "#1f77b4") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Song Popularity vs Valence", x = "Valence", y = "Song Popularity") +
+  theme_minimal(base_size = 14) + 
+  theme(plot.title = element_text(face = "bold", hjust = 0.5))
 # ---------------------- CORRELATION ----------------------
 
 # Tính và vẽ biểu đồ tương quan giữa các biến liên tục
 library(corrplot)
 library(RColorBrewer)
 
-cor_matrix <- cor(num_data, use = "complete.obs")  # tính ma trận tương quan
+cor_matrix <- cor(num_data, use = "complete.obs") # tính ma trận tương quan
 corrplot(cor_matrix,
-         method = "color",
-         type = "upper",
-         order = "hclust",
-         col = colorRampPalette(brewer.pal(8, "RdYlBu"))(200),
-         tl.col = "black", tl.srt = 45,
-         addCoef.col = "black", number.cex = 0.7,
-         cl.cex = 0.8, tl.cex = 0.9,
-         diag = FALSE, mar = c(0, 0, 1, 0))
+  method = "color",
+  type = "upper",
+  order = "hclust",
+  col = colorRampPalette(brewer.pal(8, "RdYlBu"))(200),
+  tl.col = "black", tl.srt = 45,
+  addCoef.col = "black", number.cex = 0.7,
+  cl.cex = 0.8, tl.cex = 0.9,
+  diag = FALSE, mar = c(0, 0, 1, 0)
+)
 
 # ---------------------- THỐNG KÊ SUY DIỄN ----------------------
 
@@ -173,7 +244,7 @@ n1 <- length(mode1_data)
 
 # Tính thống kê Z cho so sánh hai nhóm
 z_value <- (mean0 - mean1) / sqrt((sd0^2 / n0) + (sd1^2 / n1))
-p_value <- 2 * (1 - pnorm(abs(z_value)))  # kiểm định hai phía
+p_value <- 2 * (1 - pnorm(abs(z_value))) # kiểm định hai phía
 
 # In kết quả
 cat("Z-value:", z_value, "\n")
@@ -193,13 +264,15 @@ library(caTools)
 set.seed(12)
 split <- sample.split(main_data$song_popularity, SplitRatio = 0.8)
 train_data <- subset(main_data, split == TRUE)
-test_data  <- subset(main_data, split == FALSE)
+test_data <- subset(main_data, split == FALSE)
 
 # Mô hình hồi quy tuyến tính với tất cả biến độc lập
-model_full <- lm(song_popularity ~ song_duration_ms + acousticness + danceability + 
-                   energy + instrumentalness + key + liveness + loudness + 
-                   audio_mode + speechiness + tempo + time_signature + audio_valence,
-                 data = train_data)
+model_full <- lm(
+  song_popularity ~ song_duration_ms + acousticness + danceability +
+    energy + instrumentalness + key + liveness + loudness +
+    audio_mode + speechiness + tempo + time_signature + audio_valence,
+  data = train_data
+)
 
 # Tóm tắt mô hình đầy đủ
 summary(model_full)
@@ -221,7 +294,6 @@ actual <- test_data$song_popularity
 # Tính R-squared trên tập test
 SSE <- sum((predicted - actual)^2)
 SST <- sum((mean(train_data$song_popularity) - actual)^2)
-R2_test <- 1 - SSE/SST
+R2_test <- 1 - SSE / SST
 
 cat("R-squared trên tập test:", round(R2_test, 4), "\n")
-
